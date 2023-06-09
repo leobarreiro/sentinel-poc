@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentinel-poc-cm
+  labels:
+    app: sentinel-poc
+    generator: arlepton
+data:
+  KEYCLOAK_URL: "https://auth-demoproject.arlepton.com/"
+  KEYCLOAK_REALM: "Realm"
+  KEYCLOAK_CLIENTID: "demoproject"
+  KEYCLOAK_CLIENTSECRET: ""
+
+# Acrescente todos os dados que forem necessarios usando a seguinte sintaxe:
+# CHAVE: "VALOR"
+# Por exemplo:
+# DATABASE_USERNAME: "usuario-database"

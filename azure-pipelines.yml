@@ -1,0 +1,65 @@
+
+# azure-pipelines.yml para azure devops
+# gerado usando o ARLepton
+
+trigger:
+  branches:
+    exclude:
+      - '*'
+  tags:
+    include:
+      - '*'
+
+pool:
+  vmImage: ubuntu-latest
+  workspace:
+    clean: all
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+  imageRepo: 'poc'
+  imageName: '$(Build.Repository.Name)'
+  imageVersion: '$(Build.SourceBranchName)'
+
+stages:
+- stage: Compile
+  displayName: Compile Java and Build Docker
+  jobs:
+    - job: CompilePush
+      displayName: Maven and Docker
+      steps:
+      - task: Maven@3
+        name: MavenCompile
+        displayName: maven package
+        inputs:
+          mavenPomFile: 'pom.xml'
+          goals: 'clean package'
+          publishJUnitResults: false
+          javaHomeOption: 'JDKVersion'
+          mavenVersionOption: 'Default'
+          mavenAuthenticateFeed: false
+          effectivePomSkip: false
+          sonarQubeRunAnalysis: false
+      - task: Docker@2
+        displayName: docker build
+        inputs:
+          # revise abaixo o nome correto do ACR
+          # configurado na azure da sua empresa
+          containerRegistry: acr-arlepton
+          repository: '$(imageRepo)/$(imageName)'
+          command: 'build'
+          Dockerfile: 'target/Dockerfile'
+          buildContext: 'target'
+          tags: '$(imageVersion)'
+      - task: Docker@2
+        displayName: docker push
+        inputs:
+          # revise abaixo o nome correto do ACR
+          # configurado na azure da sua empresa
+          containerRegistry: acr-arlepton
+          repository: '$(imageRepo)/$(imageName)'
+          command: 'push'
+          tags: '$(imageVersion)'

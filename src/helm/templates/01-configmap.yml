@@ -1,0 +1,18 @@
+{{- if .Values.configmap.create -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  labels:
+    app: {{ .Values.app.name }}
+    group: {{ .Values.app.group }}
+    release: {{ .Release.Name }}
+data:
+  KEYCLOAK_URL: {{ .Values.configmap.data.keycloakUrl | quote }}
+  KEYCLOAK_REALM: {{ .Values.configmap.data.keycloakRealm | quote }}
+  KEYCLOAK_MS_CLIENT_ID: {{ .Values.configmap.data.keycloakClientId | quote }}
+  KEYCLOAK_CLIENTSECRET: {{ .Values.configmap.data.keycloakClientSecret | quote }}
+  REDIS_HOST: {{ .Values.configmap.data.redisHost | quote }}
+  REDIS_PORT: {{ .Values.configmap.data.redisPort | quote }}
+{{- end -}}

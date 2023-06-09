@@ -1,0 +1,88 @@
+# ID da aplicacao
+app:
+  # defina sempre o nome do app
+  # deve ser um nome unico no namespace
+  name: sentinel-poc
+  # o grupo de apps ao qual este app pertence
+  group: arlepton
+
+# informacoes sobre o deployment
+deployment:
+  # quantidade de replicas do pod
+  replicas: 1
+  # porta exposta pelo container
+  port: 8080
+  # requests de cpu e memoria
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  # limites de cpu e memoria
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  # informacoes da imagem docker 
+  image:
+    # nome da imagem, incluindo o registry docker, diretorios e nome
+    # por exemplo: nbc.azureacr.io/portal-correspondente/ms-email 
+    # name: acr-arlepton/arlepton/sentinel-poc
+    name: acr-arlepton/arlepton/sentinel-poc
+    # versao da imagem docker
+    version: 0.1.0
+    # estrategia de pull policy
+    pullPolicy: Always
+
+# servico kubernetes
+service:
+  # tipo do service: ClusterIP / NodePort / LoadBalancer
+  type: ClusterIP
+  # Node Port - usado quando o serviço nao é ClusterIP
+  nodePort: 32754
+
+#Service Mesh
+serviceMesh:
+  # enabled / disabled
+  status: enabled
+
+# Configmap
+configmap:
+  # define se o configmap deve ser criado ou nao
+  create: true
+  # nome do configmap
+  name: sentinel-poc-cm
+  # dados do configmap
+  # usado somente em caso de configmap.create = true
+  data:
+    keycloakUrl: https://auth-demoproject.arlepton.com/
+    keycloakRealm: Realm
+    keycloakClientId: demoproject
+    keycloakClientSecret: 
+    redisHost: localhost
+    redisPort: 6379
+
+# StorageClass para volumes
+persistence:
+  # true ou false
+  enable: false
+  # Nome do StorageClass responsavel pela criacao do Persistence Volume
+  # usado em caso de persistence.enable = true
+  storageClassName: default
+  # path absoluto do diretorio de armazenamento dentro do container
+  # usado em caso de persistence.enable = true
+  mountPath: /app/data
+  # Tamanho do Persistence Volume requerido
+  # usado em caso de persistence.enable = true
+  size: 4Gi
+
+# Configuracoes para Secret de registry-pull
+registry:
+  # se deve criar a secret registry-pull ou nao
+  createSecret: false
+  # nome da secret para pull de imagens
+  secretName: registry-pull
+  # usado somente em caso de registry.createSecret = true
+  # registry host (dns)
+  host: acr-arlepton
+  # usuario do registry docker
+  user: arphoenix
+  # senha do registry docker
+  pwd: password-here

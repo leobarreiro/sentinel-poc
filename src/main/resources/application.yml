@@ -1,0 +1,37 @@
+server:
+  compression:
+    enabled: true
+  port: 8080
+  servlet: 
+    context-path: /
+
+springfox:
+  documentation:
+    swagger.v2.path: /v2/api-docs
+    info:
+      title: 
+      description: sentinel-poc Docs.
+      version: 1.0
+    base-package: org.redispoc.sentinelpoc
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  application:
+    name: sentinel-poc
+  banner:
+    location: classpath:bann.txt
+  messages:
+    basename: i18n/messages
+  cache:
+    type: redis
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+logging:
+  level:
+    root: INFO
+    org.redispoc.sentinelpoc: INFO
+    org.springframework.boot.context: INFO

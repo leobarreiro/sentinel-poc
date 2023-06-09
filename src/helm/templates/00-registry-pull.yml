@@ -1,0 +1,15 @@
+{{- if .Values.registry.createSecret }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.registry.secretName }}
+  labels:
+    app: {{ .Values.app.name }}
+    group: {{ .Values.app.group }}
+    release: {{ .Release.Name }}
+    version: {{ .Values.deployment.image.version }}
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: {{ template "DockerConfigJsonB64" .}}
+{{- end }}

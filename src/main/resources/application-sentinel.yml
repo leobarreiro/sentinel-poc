@@ -1,0 +1,15 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    port: 6379
+    password: ARLepton1234
+    sentinel:
+      master: mymaster
+      nodes:
+        - 10.44.0.12
+        - 10.32.0.39
+        - 10.44.0.15
+    lettuce:
+      shutdown-timeout: 200ms
+

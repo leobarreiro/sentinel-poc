@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentinel-poc
+  labels:
+    app: sentinel-poc
+    generator: arlepton
+spec:
+  selector:
+    matchLabels:
+      app: sentinel-poc
+  template:
+    metadata:
+      labels:
+        app: sentinel-poc
+        generator: arlepton
+    spec:
+      imagePullSecrets:
+      - name:  
+      containers:
+      - image: acr-arlepton/arlepton/sentinel-poc:0.1.0
+        imagePullPolicy: "IfNotPresent"
+        name: sentinel-poc
+        ports:
+         - containerPort: 8080
+         - containerPort: 9090
+        envFrom:
+        - configMapRef:
+            name: sentinel-poc-cm
+            optional: false
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: $(release.name)
+description: Helm chart para microserviços
+type: application
+version: 0.1.0
+appVersion: $(image.version)

@@ -1,0 +1,8 @@
+  °°°°    °°°°°    °°      °°°°°   °°°°°   °°°°°°   °°°°   °°  °° 
+ °°  °°   °° °°    °°      °°      °°  °°    °°    °°  °°  °°° °° 
+ °°°°°°   °°°°     °°      °°°°    °°°°°     °°    °°  °°  °°°°°° 
+ °°  °°   °°  °°   °°      °°      °°        °°    °°  °°  °° °°° 
+ °°  °° ° °°  °° ° °°°°°°  °°°°°°  °°        °°     °°°°   °°  °° 
+ Microservice: sentinel-poc
+ Docker image: acr-arlepton/arlepton/sentinel-poc:0.1.0
+ Running with Spring-Boot 2.7.3 | Spring Cloud 2021.0.3

@@ -1,11 +1,10 @@
- FROM fabric8/java-alpine-openjdk11-jre
+FROM eclipse-temurin:11.0.17_8-jre
 
-ENV JAVA_APP_JAR=@project.artifactId@-@project.version@.jar \
-    TZ=America/Sao_Paulo \
-    SPRING_PROFILES_ACTIVE="stack" \
-    JAVA_OPTIONS="-Xmx256m" \
-    CONTAINER_MAX_MEMORY=256m \
-    JAVA_APP_NAME="@project.artifactId@" \
-    AB_OFF=true
+RUN mkdir /opt/deployments
 
-ADD $JAVA_APP_JAR /deployments/@project.artifactId@-@project.version@.jar
+COPY @project.artifactId@-@project.version@.jar /opt/deployments/
+COPY start.sh /opt/deployments/
+
+RUN chmod 0755 /opt/deployments -R
+
+ENTRYPOINT ["sh", "-c", "/opt/deployments/start.sh"]

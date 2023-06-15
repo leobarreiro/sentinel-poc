@@ -9,8 +9,8 @@ springfox:
   documentation:
     swagger.v2.path: /v2/api-docs
     info:
-      title: 
-      description: sentinel-poc Docs.
+      title: Sentinel POC
+      description: sentinel-poc docs
       version: 1.0
     base-package: org.redispoc.sentinelpoc
 

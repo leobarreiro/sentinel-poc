@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApiBaseService {
 
-	@Cacheable("date-now")
+	@Cacheable("fecha-ahora")
 	public String localDate() {
 		return LocalDate.now().toString();
 	}
 
+	@Cacheable("hola")
 	public String hello() {
 		return "Hello";
 	}

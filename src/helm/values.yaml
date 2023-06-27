@@ -14,8 +14,8 @@ deployment:
   port: 8080
   # requests de cpu e memoria
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 200m
+    memory: 256Mi
   # limites de cpu e memoria
   limits:
     cpu: 200m
@@ -23,11 +23,10 @@ deployment:
   # informacoes da imagem docker 
   image:
     # nome da imagem, incluindo o registry docker, diretorios e nome
-    # por exemplo: nbc.azureacr.io/portal-correspondente/ms-email 
-    # name: acr-arlepton/arlepton/sentinel-poc
-    name: acr-arlepton/arlepton/sentinel-poc
+    # por exemplo: acr-arlepton/arlepton/sentinel-poc
+    name: docker.kalico.one/pocs/sentinel
     # versao da imagem docker
-    version: 0.1.0
+    version: 0.5.0
     # estrategia de pull policy
     pullPolicy: Always
 
@@ -38,11 +37,6 @@ service:
   # Node Port - usado quando o serviço nao é ClusterIP
   nodePort: 32754
 
-#Service Mesh
-serviceMesh:
-  # enabled / disabled
-  status: enabled
-
 # Configmap
 configmap:
   # define se o configmap deve ser criado ou nao
@@ -52,36 +46,23 @@ configmap:
   # dados do configmap
   # usado somente em caso de configmap.create = true
   data:
-    keycloakUrl: https://auth-demoproject.arlepton.com/
-    keycloakRealm: Realm
-    keycloakClientId: demoproject
-    keycloakClientSecret: 
+    # sentinel / default
+    redisMode: sentinel
     redisHost: localhost
+    redisUser: master
+    redisPasswd: ARLepton1234
     redisPort: 6379
-
-# StorageClass para volumes
-persistence:
-  # true ou false
-  enable: false
-  # Nome do StorageClass responsavel pela criacao do Persistence Volume
-  # usado em caso de persistence.enable = true
-  storageClassName: default
-  # path absoluto do diretorio de armazenamento dentro do container
-  # usado em caso de persistence.enable = true
-  mountPath: /app/data
-  # Tamanho do Persistence Volume requerido
-  # usado em caso de persistence.enable = true
-  size: 4Gi
+    sentinelPort: 5000
 
 # Configuracoes para Secret de registry-pull
 registry:
   # se deve criar a secret registry-pull ou nao
-  createSecret: false
+  createSecret: true
   # nome da secret para pull de imagens
   secretName: registry-pull
   # usado somente em caso de registry.createSecret = true
   # registry host (dns)
-  host: acr-arlepton
+  host: docker.kalico.one
   # usuario do registry docker
   user: arphoenix
   # senha do registry docker

@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.17_8-jre
+FROM eclipse-temurin:17.0.7_7-jre
 
 RUN mkdir /opt/deployments
 

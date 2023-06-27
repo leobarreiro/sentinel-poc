@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @Profile({"sentinel"})
@@ -32,12 +33,15 @@ public class RedisSentinelConfig {
 
 	@Bean
 	public RedisSentinelConfiguration sentinelConfig() {
-		RedisSentinelConfiguration redisConf = new RedisSentinelConfiguration();
-		redisConf.setMaster(redisProperties.getSentinel().getMaster());
+		RedisSentinelConfiguration sentinelConf = new RedisSentinelConfiguration();
+		sentinelConf.setMaster(redisProperties.getSentinel().getMaster());
+		sentinelConf.setUsername(redisProperties.getUsername());
+		sentinelConf.setPassword(redisProperties.getPassword());
 		redisProperties.getSentinel().getNodes().forEach(s -> {
-			redisConf.addSentinel(new RedisNode(s, redisProperties.getPort()));
+			var parts = StringUtils.split(s, ":");
+			sentinelConf.addSentinel(new RedisNode(parts[0], Integer.valueOf(parts[1])));
 		});
-		return redisConf;
+		return sentinelConf;
 	}
 
 }

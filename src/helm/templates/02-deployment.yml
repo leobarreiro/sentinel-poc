@@ -19,8 +19,6 @@ spec:
       labels:
         app: {{ .Values.app.name }}
       annotations:
-        linkerd.io/inject: {{ .Values.serviceMesh.status }}
-        config.linkerd.io/opaque-ports: "80"
     spec:
       imagePullSecrets:
       - name: {{ .Values.registry.secretName }} 

@@ -9,10 +9,10 @@ metadata:
     group: {{ .Values.app.group }}
     release: {{ .Release.Name }}
 data:
-  KEYCLOAK_URL: {{ .Values.configmap.data.keycloakUrl | quote }}
-  KEYCLOAK_REALM: {{ .Values.configmap.data.keycloakRealm | quote }}
-  KEYCLOAK_MS_CLIENT_ID: {{ .Values.configmap.data.keycloakClientId | quote }}
-  KEYCLOAK_CLIENTSECRET: {{ .Values.configmap.data.keycloakClientSecret | quote }}
+  REDIS_MODE: {{ .Values.configmap.data.redisMode | quote }}
   REDIS_HOST: {{ .Values.configmap.data.redisHost | quote }}
   REDIS_PORT: {{ .Values.configmap.data.redisPort | quote }}
+  SENTINEL_PORT: {{ .Values.configmap.data.sentinelPort | quote }}
+  REDIS_USER: {{ .Values.configmap.data.redisUser | quote }}
+  REDIS_PASSWD: {{ .Values.configmap.data.redisPasswd | quote }}
 {{- end -}}
